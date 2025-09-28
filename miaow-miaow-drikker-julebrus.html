@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miaow Miaow drikker julebrus</title>
+    <!-- CSS skal ikke røres -->
+    <link rel="stylesheet" href="css-skal-ikke-roeres/miaow-miaow-drikker-julebrus.css">
+</head>
+<body>
+
+    <div id="container"><!-- DET ER IKKE LOV Å ENDRE PÅ NOE I HTML-KODEN! -->
+
+        <h1 id="main-heading">Miaow Miaow drikker julebrus</h1>
+
+        <img id="background-image" src="images/at-the-table.png">
+
+        <img id="cat-left" src="images/cat-left.png">
+
+        <img id="cat-right" src="images/cat-right.png">
+
+        <img id="waiter" src="images/waiter.png">
+
+        <div id="glass-1">
+            <div id="glass-1-content"></div><!-- Innholdet i glasset på venstre side -->
+        </div>
+
+        <div id="glass-2">
+            <div id="glass-2-content"></div><!-- Innholdet i glasset på høyre side -->
+        </div>
+
+    </div>
+
+    <div id="output-div">
+        <p>Her skrives det ut hva som skjer underveis</p>
+    </div><!-- DET ER IKKE LOV Å ENDRE PÅ NOE I HTML-KODEN! -->
+
+    
+    <script>/* I denne script-tagen skal du kode JavaScript (ikke i ekstern fil) */
+
+
+        // Her henter jeg inn alle elementene fra html filen til Javascript:
+        var leftCat = document.getElementById("cat-left");
+        var rightCat = document.getElementById("cat-right");
+        var waiter = document.getElementById("waiter");
+        var leftGlass = document.getElementById("glass-1-content");
+        var rightGlass = document.getElementById("glass-2-content");
+        var message = document.getElementById("output-div");
+
+        // Her lager jeg variabler:
+        var fillGlass = 40;
+        var emptyGlass = 0;
+        var amountOfDrinkLeft = 0;
+        var amountOfDrinkRight = 0;
+        var drink = 40;
+       
+        // Her lager jeg funksjoner:
+        function waiterFillsGlass() { // Funksjon som gjør at kelneren fyller opp glassene
+            message.innerHTML = "";
+            
+            if (amountOfDrinkLeft  >= 80) {
+                message.innerHTML = "Glasset er fullt."
+            } else if (amountOfDrinkLeft  <= 40){
+                updateLeftGlass();
+                updateRightGlass();
+
+            message.innerHTML = "Kelneren fyller opp begge glassene.";
+            }
+        }
+
+       function updateLeftGlass() { // Funksjon som oppdaterer mengden drikke i glasset til venstre
+        amountOfDrinkLeft += fillGlass;
+        leftGlass.style.height = amountOfDrinkLeft + 'px';
+       }
+
+       function leftCatDrinks() { // Funksjon som får katten til venstre å drikke fra glasset sitt
+            if (amountOfDrinkLeft > 0) {
+                message.innerHTML = "Katten til venstre drikker av glasset."
+                updateGlassLeft();
+
+            } else {
+                message.innerHTML = "Glasset er tomt."
+            }
+       }
+     
+       function updateGlassLeft() { // Funksjon som oppdaterer mengde drikke i glasset til venstre etter at katten har drikket av det
+        amountOfDrinkLeft -= drink;
+        leftGlass.style.height = amountOfDrinkLeft + 'px';
+       }
+
+       function updateRightGlass() { // Funksjon som oppdaterer mengden drikke i glasset til høyre
+        amountOfDrinkRight += fillGlass;
+        rightGlass.style.height = amountOfDrinkRight + 'px';
+       }
+
+       function rightCatDrinks() { // Funksjon som får katten til høyre å drikke fra glasset sitt
+        if (amountOfDrinkRight > 0) {
+            message.innerHTML = "Katten til høyre drikker av glasset."
+            updateGlassRight();
+        } else {
+            message.innerHTML = "Glasset er tomt."
+        }
+       }
+
+       function updateGlassRight() { // Funksjon som oppdaterer mengde drikke i glasset til høyre etter at katten har drikket av det
+        amountOfDrinkRight -= drink;
+        rightGlass.style.height = amountOfDrinkRight + 'px';
+       }
+
+        // Her kommer alle events (.onclick):
+        waiter.onclick = waiterFillsGlass;
+        leftCat.onclick = leftCatDrinks;
+        rightCat.onclick = rightCatDrinks;
+
+
+    </script>
+    
+</body>
+</html>

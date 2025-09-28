@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kappløpet</title>
+    <!-- CSS skal ikke røres -->
+    <link rel="stylesheet" href="css-skal-ikke-roeres/kapploepet.css">
+</head>
+<body>
+
+    <div id="container"><!-- DET ER IKKE LOV Å ENDRE PÅ NOE I HTML-KODEN! -->
+
+        <h1 id="main-heading">Kappløpet</h1>
+        <h2 id="winner-status">Løpet er i gang</h2>
+
+        <input id="move-miaows-left-leg-btn" type="button" value="Beveg Miaows venstre ben">
+        <input id="move-miaows-right-leg-btn" type="button" value="Beveg Miaows høyre ben">
+
+        <div id="pond"></div>
+        <div id="finish-line"></div>
+        <img id="building" src="images/building-2.png">
+
+        <img id="eskilpadde" src="images/eskilpadde.png">
+
+        <img id="miaow-miaow" src="images/miaow-miaow-runner.png">
+        
+        <img id="geir-geit" src="images/geirgeit.png">          
+
+    </div><!-- DET ER IKKE LOV Å ENDRE PÅ NOE I HTML-KODEN! -->
+    
+
+    <script>/* I denne script-tagen skal du kode JavaScript (ikke i ekstern fil) */
+
+        /*
+            Beskrivelse av setInterval-funksjonen.
+            ---
+            setInterval(function(){
+                // Kode som skal skje for hver x millisekunder plasseres her
+            }, 1000); // 1000 betyr 1000 millisekunder som betyr 1 sekund. 
+        */
+
+
+        // Her kommer ariabler:
+        var eskilpadde = document.getElementById("eskilpadde");
+        var miaow = document.getElementById("miaow-miaow");
+        var geir = document.getElementById("geir-geit");
+
+        var leftLeg = document.getElementById("move-miaows-left-leg-btn");
+        var rightLeg = document.getElementById("move-miaows-right-leg-btn");
+
+        var winner = document.getElementById("winner-status");
+
+        var eskilCurrentPosition = 0;
+        var geirCurrentPosition = 0;
+        var miaowCurrentPostion = 0;
+
+
+        // Her kommer Funksjoner:
+        function eskilpaddeMoves() { // Eskilpaddes bevegelser
+            var eksilCurrentPosition = 0;
+
+            setInterval(() => {
+                eskilCurrentPosition += 3;
+                eskilpadde.style.left = eskilCurrentPosition + 'px';
+
+                checkWinner(eskilCurrentPosition, "Eskil");
+            }, 1000);
+        }
+
+
+
+        function geirMoves(){ // Geir Geits bevegelser
+            var geirCurrentPosition = 0;
+
+            setInterval(() => {
+              var moveForward = Math.random() < 0.8; // Gjør at det er 80% sjanse at Geir Geit går fremover.
+
+              if (moveForward) {
+                geirCurrentPosition += 12;
+              } else {
+                geirCurrentPosition -= 10;
+              }
+              geir.style.left = geirCurrentPosition + 'px';
+
+              checkWinner(geirCurrentPosition, "Geir");
+            }, 500);
+        }
+
+        function miaowMovesLeftLeg(){ // Miaows bevegelser med venstre bein
+            miaowCurrentPostion += moveForward = Math.floor(Math.random() * 6) +5; // Gjør at steget blir et tilfeldig tall mellom 5 og 10.
+            miaow.style.left = miaowCurrentPostion + 'px';
+
+            checkWinner(miaowCurrentPostion, "Miaow");
+        }
+
+        function miaowMovesRightLeg(){ // Miaows bevegelser med høyre bein
+            miaowCurrentPostion += moveForward = Math.floor(Math.random() * 6) +5; // Gjør at steget blir et tilfeldig tall mellom 5 og 10.
+            miaow.style.left = miaowCurrentPostion + 'px';
+
+            checkWinner(miaowCurrentPostion, "Miaow");
+        }
+        
+        function checkWinner(position, character){ // Funksjonen sjekker om noen av karakterene har krysset punktet til finish-line.
+            var finishLine = document.getElementById("finish-line");
+            var winner = document.getElementById("winner-status");
+
+            if (position >= finishLine.offsetLeft) {
+                winner.innerHTML = `${character} VANT LØPET!`;
+            }
+        }
+        
+       eskilpaddeMoves();
+       geirMoves();
+
+       leftLeg.onclick = miaowMovesLeftLeg;
+       rightLeg.onclick = miaowMovesRightLeg;
+        
+    </script>
+    
+</body>
+</html>

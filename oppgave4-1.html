@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miaow Miaow kjøper kinobilletter</title>
+    <!-- CSS skal ikke røres -->
+    <link rel="stylesheet" href="css-skal-ikke-roeres/miaow-miaow-kjoeper-kinobilletter.css">
+</head>
+<body>
+    
+    <div id="container"><!-- DET ER IKKE LOV Å ENDRE PÅ NOE I HTML-KODEN! -->
+
+        <article id="billett-1"><img src="images/billett.png"></article><!-- I disse 5 article legges det inn bilder av billettene for Oppgave 4-utvidelsen. -->
+        <article id="billett-2"><img src="images/billett.png"></article>
+        <article id="billett-3"><img src="images/billett.png"></article>
+        <article id="billett-4"><img src="images/billett.png"></article>
+        <article id="billett-5"><img src="images/billett.png"></article>
+       
+
+        <h1 id="main-heading">Miaow Miaow kjøper kinobilletter</h1>
+
+        <div id="panel-div">
+
+            <h3 id="panel-heading">Kjøp kinobilletter her</h3>
+            
+            <div id="adult-cats-div">
+                <span id="number-of-adult-tickets-p">Antall voksenbilletter: 0</span>
+                <input id="increase-adult-tickets-btn" type="button" value="+">
+                <input id="decrease-adult-tickets-btn" type="button" value="-">
+            </div>
+
+            <div id="children-cats-div">                
+                <span id="number-of-children-tickets-p">Antall barnebilletter: 0</span>
+                <input id="increase-children-tickets-btn" type="button" value="+">
+                <input id="decrease-children-tickets-btn" type="button" value="-">
+            </div>                           
+            
+            <div id="summary-div">                
+                <h3>Kjøpsoversikt</h3>
+                <p>Totalpris voksenbilletter: 0,-</p>
+                <p>Totalpris barnebilletter: 0,-</p>
+                <p>Totalpris: 0,-</p>
+            </div>
+
+            <input id="buy-btn" type="button" value="Kjøp">
+
+        </div>
+
+        <img id="miaow-miaow" src="images/miaow-miaow.png">
+        <img id="happy-cat" src="images/happy-cat.png">
+
+        <img id="child-1" src="images/cat.png">
+        <img id="child-2" src="images/cat.png">
+        <img id="child-3" src="images/cat.png">
+
+    </div><!-- DET ER IKKE LOV Å ENDRE PÅ NOE I HTML-KODEN! -->
+    
+
+    <script>/* I denne script-tagen skal du kode JavaScript (ikke i ekstern fil) */
+
+        // Her kommer variabler:
+        var numberOfAdultsTicket = document.getElementById("number-of-adult-tickets-p");
+        var increaseAdultTicket = document.getElementById("increase-adult-tickets-btn");
+        var decreaseAdultTicket = document.getElementById("decrease-adult-tickets-btn");
+
+        var numberOfChildrenTicket = document.getElementById("number-of-children-tickets-p")
+        var increaseChildrenTicket = document.getElementById("increase-children-tickets-btn");
+        var decreaseChildrenTicket = document.getElementById("decrease-children-tickets-btn")
+
+        var buyButton = document.getElementById("buy-btn");
+
+        var tickets = document.getElementsByTagName("article");
+        
+        var counterAdult = 0;
+        var counterChild = 0;
+
+        var priceSummary = document.getElementById("summary-div");
+
+        const ticketPrices = { // Dette objektet må brukes for å få tak i billettprisene.
+            adultTicketPrice: 150,
+            childTicketPrice: 90
+        };
+
+        // Her kommer funksjoner:
+        function plusAdultTicket(){ // + knappen voksenbilletter
+            counterAdult++;
+            numberOfAdultsTicket.innerHTML = `Antall voksenbilletter: ${counterAdult}`;
+            updateTotalCost();
+        }
+
+        function minusAdultTicket(){ // - knappen voksenbilletter
+            counterAdult--;
+
+            if (counterAdult >= 0){
+            numberOfAdultsTicket.innerHTML = `Antall voksenbilletter: ${counterAdult}`;
+            updateTotalCost();
+
+            } else {
+                numberOfAdultsTicket.innerHTML = `Antall voksenbilletter: 0`;
+            }
+        }
+
+        function plusChildTicket(){ // + knappen barnebilletter
+            counterChild++;
+            numberOfChildrenTicket.innerHTML = `Antall barnebilletter: ${counterChild}`;
+
+            updateTotalCost();
+        }
+
+        function minusChildTicket(){ // - knappen barnebilletter
+            counterChild--;
+
+            if(counterChild >= 0){
+                numberOfChildrenTicket.innerHTML = `Antall barnebilletter: ${counterChild}`;
+
+                updateTotalCost();
+            
+            } else {
+                numberOfChildrenTicket.innerHTML = `Antall barnebilletter: 0`;
+            }
+        }
+
+        function updateTotalCost(){ // området med kjøpsoversikt tekst
+            var totalCostAdult = counterAdult * ticketPrices.adultTicketPrice;
+            var totalCostChild = counterChild * ticketPrices.childTicketPrice;
+            var totalCost = totalCostAdult + totalCostChild;
+            priceSummary.innerHTML = `
+                <h3>Kjøpsoversikt</h3>
+                <p>Totalpris voksenbilletter: ${totalCostAdult},-</p>
+                <p>Totalpris barnebilletter: ${totalCostChild},-</p>
+                <p>Totalpris: ${totalCost},-</p>
+                `
+        }
+
+        function buyTickets(){ // Knappen for å kjøpe billetter
+            var tickets = document.getElementsByTagName("article");
+
+            if (counterAdult === 2 && counterChild === 3){
+                priceSummary.innerHTML = `
+                <h3>Billettene er kjøpt!</h3>
+                <p>Ha en fin kino opplevelse.</p>
+                `
+                tickets.style.display = "block";
+            
+            } else {
+                priceSummary.innerHTML = `
+                <h3>Oops, noe gikk galt..</h3>
+                <p>Noe er feil med antall biletter.</p>
+                `
+            }
+            tickets.style.display = "none";
+        }
+
+        // onclick
+        increaseAdultTicket.onclick = plusAdultTicket;
+        decreaseAdultTicket.onclick = minusAdultTicket;
+
+        increaseChildrenTicket.onclick = plusChildTicket;
+        decreaseChildrenTicket.onclick = minusChildTicket;
+
+        buyButton.onclick = buyTickets;
+
+    </script>
+    
+</body>
+</html>
